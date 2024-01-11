@@ -1,5 +1,5 @@
 # Use an official Node.js runtime as a parent image
-FROM node:14
+FROM node:16
 
 # Set the working directory in the container
 WORKDIR /arbicloud
@@ -16,8 +16,9 @@ COPY arbicloud .
 # Build the React Vite app
 RUN npx vite build
 
-# Expose port 80 to the outside world
+# Expose port 30 to the outside world
 EXPOSE 30
 
 # Command to run the application
-CMD ["npx", "vite", "preview"]
+CMD ["npx", "vite", "preview", "--host", "0.0.0.0"]
+

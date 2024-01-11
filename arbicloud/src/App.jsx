@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import Details from './components/Details'
 function App() {
   const [data, setData] = useState(null);
 
@@ -17,6 +17,7 @@ function App() {
     <div>
       <h1>Hello from React Vite App</h1>
       {data && <p>Data from Backend: {data.message}</p>}
+      <Details/>
     </div>
   );
 }

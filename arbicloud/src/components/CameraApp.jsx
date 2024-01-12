@@ -82,7 +82,7 @@ const CameraApp = () => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      <h1>Camera App</h1>
+      <h1>Object Detection App</h1>
       <div style={{ width: '100%', maxWidth: '500px', margin: 'auto' }}>
         <Webcam
           audio={false}

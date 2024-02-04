@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Detection with TensorFlow.js</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-landmarks-detection"></script>
+</head>
+
+<body>
+    <h1>Face Detection with TensorFlow.js</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+        async function setupCamera() {
+            const video = document.getElementById('video');
+            const stream = await navigator.mediaDevices.getUserMedia({ 'video': {} });
+            video.srcObject = stream;
+
+            return new Promise((resolve) => {
+                video.onloadedmetadata = () => {
+                    resolve(video);
+                };
+            });
+        }
+
+        async function loadFaceDetectionModel() {
+            return await tf.loadGraphModel('https://tfhub.dev/tensorflow/face_landmarks_68_points/1/default/1');
+        }
+
+        async function detectFace(video, model) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            while (true) {
+                const predictions = await model.estimateFaces({ input: video });
+
+                if (predictions.length > 0) {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    predictions.forEach(prediction => {
+                        ctx.beginPath();
+                        prediction.scaledMesh.forEach(point => {
+                            ctx.arc(point[0], point[1], 1, 0, 2 * Math.PI);
+                        });
+                        ctx.fillStyle = 'red';
+                        ctx.fill();
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = 'red';
+                        ctx.stroke();
+                    });
+                }
+
+                await tf.nextFrame();
+            }
+        }
+
+        async function run() {
+            const video = await setupCamera();
+            const model = await loadFaceDetectionModel();
+            detectFace(video, model);
+        }
+
+        run();
+    </script>
+</body>
+
+</html>

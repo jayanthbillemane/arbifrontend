@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  vite-react:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "4173:4173"
+
+  fastapi:
+    build:
+      context: /home/azureuser/arbicloud
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+
+  # nginx:
+  #   image: nginx
+  #   volumes:
+  #     - ./fastapi.conf:/etc/nginx/sites-available/fastapi.conf
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - vite-react
+  #     - fastapi

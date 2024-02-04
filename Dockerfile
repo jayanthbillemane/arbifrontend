@@ -17,7 +17,13 @@ COPY arbicloud .
 RUN npx vite build
 
 # Expose port 30 to the outside world
-EXPOSE 30
+EXPOSE 4173
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Copy Nginx configuration file into the container
+COPY nginx.conf /etc/nginx/sites-available/fastapi.conf
 
 # Command to run the application
 CMD ["npx", "vite", "preview", "--host", "0.0.0.0"]

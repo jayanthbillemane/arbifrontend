@@ -27,7 +27,7 @@ pipeline {
                         echo "Username: $SERVER"
 
                         // Deploy changes to the server
-                        sh "ssh  -o StrictHostKeyChecking=no -i $PEM_FILE $USERNAME@$SERVER 'cd /home/azureuser/arbifrontend && git pull && docker-compose up -d'"
+                        sh "ssh  -o StrictHostKeyChecking=no -i $PEM_FILE $USERNAME@$SERVER "
                     }
                 }
             }

@@ -6,6 +6,7 @@ pipeline {
             steps {
                 // Checkout the code from Git repository
                 git branch: 'dev', url: 'https://github.com/jayanthbillemane/arbifrontend'
+                echo 'Checked out code successfully'
             }
         }
         stage('Deploy') {
@@ -17,24 +18,31 @@ pipeline {
                 script {
                     // Retrieve SERVER credential
                     def serverCredential = credentials('server')
-                    def server = serverCredential.username
+                    echo "serverCredential: $serverCredential"
+                    def server = serverCredential.server
 
-                    // Retrieve USERNAME credential
-                    def usernameCredential = credentials('arviprod')
-                    def arviprod = usernameCredential.username
+                    // Retrieve USERNAME and PASSWORD credentials
+                    def usernamePasswordCredential = credentials('arviprod')
+                    def usernamePasswordCredentialp = credentials('passwrd')
+
+                    def arviprod = usernamePasswordCredential.azureuser
+                    def password = usernamePasswordCredentialp.passwrd
 
                     // Retrieve PEM_FILE credential
                     def pemFileCredential = credentials('pemid')
                     def pemid = pemFileCredential.id
 
-                    // Retrieve PASSWORD credential
-                    def passwordCredential = credentials('passwrd')
-                    def password = passwordCredential.password
-
+                    // Print credential values
+                    echo "Server: $server"
+                    echo "Username: $arviprod"
+                    echo "PEM File ID: $pemid"
+                    
                     // Deploy changes to the server
                     sh '''
                     sshpass -p "$password" ssh -i "$pemid" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
                     '''
+                    
+                    echo 'Deployment completed successfully'
                 }
             }
         }

@@ -19,14 +19,15 @@ pipeline {
                     // Retrieve SERVER credential
                     def serverCredential = credentials(
                         id: 'server',
-                        providerId: '/Global credentials (unrestricted)'
+                        providerId: 'arbi_prod'
                     )
                     def server = serverCredential.id
+                    echo "Server: $server"
 
                     // Retrieve USERNAME and PASSWORD credentials
                     def usernamePasswordCredential = credentials(
                         id: 'creds',
-                        providerId: '/Global credentials (unrestricted)'
+                        providerId: 'arbi_prod'
                     )
                     def arviprod = usernamePasswordCredential.Username
                     def password = usernamePasswordCredential.Password
@@ -34,7 +35,7 @@ pipeline {
                     // Retrieve PEM_FILE credential
                     def pemFileCredential = credentials(
                         id: 'pemid',
-                        providerId: '/Global credentials (unrestricted)'
+                        providerId: 'arbi_prod'
                     )
                     def pemid = pemFileCredential.id
 

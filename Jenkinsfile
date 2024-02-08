@@ -17,16 +17,25 @@ pipeline {
                 // Use Jenkins credentials to retrieve values securely
                 script {
                     // Retrieve SERVER credential
-                    def serverCredential = credentials('server', '/Global credentials (unrestricted)')
+                    def serverCredential = credentials(
+                        id: 'server',
+                        providerId: '/Global credentials (unrestricted)'
+                    )
                     def server = serverCredential.username
 
                     // Retrieve USERNAME and PASSWORD credentials
-                    def usernamePasswordCredential = credentials('arviprod', '/Global credentials (unrestricted)')
+                    def usernamePasswordCredential = credentials(
+                        id: 'arviprod',
+                        providerId: '/Global credentials (unrestricted)'
+                    )
                     def arviprod = usernamePasswordCredential.username
                     def password = usernamePasswordCredential.password
 
                     // Retrieve PEM_FILE credential
-                    def pemFileCredential = credentials('pemid', '/Global credentials (unrestricted)')
+                    def pemFileCredential = credentials(
+                        id: 'pemid',
+                        providerId: '/Global credentials (unrestricted)'
+                    )
                     def pemid = pemFileCredential.id
 
                     // Print credential values (optional)

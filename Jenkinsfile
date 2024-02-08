@@ -21,7 +21,7 @@ pipeline {
                         id: 'server',
                         providerId: '/Global credentials (unrestricted)'
                     )
-                    def server = serverCredential.server
+                    def server = serverCredential.id
 
                     // Retrieve USERNAME and PASSWORD credentials
                     def usernamePasswordCredential = credentials(

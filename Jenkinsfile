@@ -21,15 +21,15 @@ pipeline {
                         id: 'server',
                         providerId: '/Global credentials (unrestricted)'
                     )
-                    def server = serverCredential.username
+                    def server = serverCredential.server
 
                     // Retrieve USERNAME and PASSWORD credentials
                     def usernamePasswordCredential = credentials(
-                        id: 'arviprod',
+                        id: 'creds',
                         providerId: '/Global credentials (unrestricted)'
                     )
-                    def arviprod = usernamePasswordCredential.username
-                    def password = usernamePasswordCredential.password
+                    def arviprod = usernamePasswordCredential.Username
+                    def password = usernamePasswordCredential.Password
 
                     // Retrieve PEM_FILE credential
                     def pemFileCredential = credentials(

@@ -21,12 +21,11 @@ pipeline {
                 ]) {
                     // Print credential values (optional)
                     echo "Username: $USERNAME"
-                    // $remoteCommand = "cd /path/to/your/app && git pull origin dev && ./deploy.sh"
+                    // Construct the remote command
+                    def remoteCommand = "cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d"
 
                     // Deploy changes to the server
-                    sh '''
-                    ssh -i "$PEM_FILE" $username@$server 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
-                    '''
+                    sh "ssh -i $PEM_FILE $USERNAME@$server '$remoteCommand'"
                 }
             }
         }

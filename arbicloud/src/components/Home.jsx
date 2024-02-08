@@ -17,7 +17,7 @@ function Home() {
     console.log(data)
   return (
     <div className="App">
-      <h1 style={{ color: "green" }}>using JavaScript inbuilt FETCH API</h1>
+      <h1 style={{ color: "green" }}>Using JavaScript inbuilt FETCH API</h1>
       <center>
         <p>Data</p>
       </center>

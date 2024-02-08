@@ -24,7 +24,8 @@ pipeline {
                     
                     // Deploy changes to the server
                     sh '''
-                    ssh -i $PEM_FILE "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
+                    sshpass -p "$PASSWORD" ssh -i "$PEM_FILE" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
+
                     '''
                 }
             }

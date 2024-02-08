@@ -19,6 +19,12 @@ pipeline {
                     usernamePassword(credentialsId: 'creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
                     file(credentialsId: 'pemid', variable: 'PEM_FILE')
                 ]) {
+                    def serverCredential = credentials(
+                                        id: 'server',
+                                        providerId: 'arbi_prod'
+                                    )
+                    def server = serverCredential.id
+
                     // Print credential values (optional)
                     echo "Username: $USERNAME"
                     // Construct the remote command

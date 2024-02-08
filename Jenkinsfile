@@ -17,22 +17,19 @@ pipeline {
                 // Use Jenkins credentials to retrieve values securely
                 script {
                     // Retrieve SERVER credential
-                    def serverCredential = credentials('server')
-                    echo "serverCredential: $serverCredential"
-                    def server = serverCredential.server
+                    def serverCredential = credentials('server', '/Global credentials (unrestricted)')
+                    def server = serverCredential.username
 
                     // Retrieve USERNAME and PASSWORD credentials
-                    def usernamePasswordCredential = credentials('arviprod')
-                    def usernamePasswordCredentialp = credentials('passwrd')
-
-                    def arviprod = usernamePasswordCredential.azureuser
-                    def password = usernamePasswordCredentialp.passwrd
+                    def usernamePasswordCredential = credentials('arviprod', '/Global credentials (unrestricted)')
+                    def arviprod = usernamePasswordCredential.username
+                    def password = usernamePasswordCredential.password
 
                     // Retrieve PEM_FILE credential
-                    def pemFileCredential = credentials('pemid')
+                    def pemFileCredential = credentials('pemid', '/Global credentials (unrestricted)')
                     def pemid = pemFileCredential.id
 
-                    // Print credential values
+                    // Print credential values (optional)
                     echo "Server: $server"
                     echo "Username: $arviprod"
                     echo "PEM File ID: $pemid"
@@ -41,8 +38,6 @@ pipeline {
                     sh '''
                     sshpass -p "$password" ssh -i "$pemid" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
                     '''
-                    
-                    echo 'Deployment completed successfully'
                 }
             }
         }

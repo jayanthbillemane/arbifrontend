@@ -17,7 +17,7 @@ function Home() {
     console.log(data)
   return (
     <div className="App">
-      <h1 style={{ color: "green" }}>ML Logistic Solution</h1>
+      <h1 style={{ color: "green" }}>ML Logistic Solution and ML Ops</h1>
       <center>
         <p>Data</p>
       </center>

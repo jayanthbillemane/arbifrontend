@@ -18,10 +18,10 @@ pipeline {
                 script {
                     // Retrieve SERVER credential
                     def serverCredential = credentials(
-                        id: 'server',
+                        server: 'server',
                         providerId: 'arbi_prod'
                     )
-                    def server = serverCredential.id
+                    def server = serverCredential.server
                     echo "Server: $server"
 
                     // Retrieve USERNAME and PASSWORD credentials

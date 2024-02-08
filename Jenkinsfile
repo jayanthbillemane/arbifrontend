@@ -24,8 +24,10 @@ pipeline {
 
                         // Print credential values (optional)
                         echo "Username: $USERNAME"
+                        echo "Username: $SERVER"
+
                         // Deploy changes to the server
-                        sh "ssh -i $PEM_FILE $USERNAME@$SERVER 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'"
+                        sh "ssh  -o StrictHostKeyChecking=no -i $PEM_FILE $USERNAME@$SERVER 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'"
                     }
                 }
             }

@@ -17,7 +17,7 @@ pipeline {
                 sh '''
                 SERVER="$server"
                 USERNAME="$arviprod"
-                PEM_FILE="C:\Users\Jayanth\Desktop\arvm_key.pem"
+                PEM_FILE="$pemid"
                 PASSWORD="$passwrd"
                 
                 sshpass -p "$PASSWORD" ssh -i "$PEM_FILE" "$USERNAME"@"$SERVER" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'

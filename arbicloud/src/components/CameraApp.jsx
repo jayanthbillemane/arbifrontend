@@ -20,7 +20,7 @@ const CameraApp = () => {
       formData.append('file', dataURItoBlob(imageData), 'image.jpg');
 
       // Replace 'API_ENDPOINT' with the actual endpoint of your API
-      const response = await axios.post('http://127.0.0.1:8000/uploadfile/', formData, {
+      const response = await axios.post('https://www.arbi.cloud/test', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

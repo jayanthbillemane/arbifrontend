@@ -1,10 +1,9 @@
 import React from 'react';
-import CameraApp from './components/CameraApp';
-import VideoStream from './components/VideoStream'
+import Home from './components/Home';
 function App() {
   return (
     <div className="App">
-      <CameraApp />
+      <Home />
     </div>
   );
 }

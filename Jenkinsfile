@@ -17,23 +17,23 @@ pipeline {
                 script {
                     // Retrieve SERVER credential
                     def serverCredential = credentials('server')
-                    def server = serverCredential.server
+                    def server = serverCredential.username
 
                     // Retrieve USERNAME credential
                     def usernameCredential = credentials('arviprod')
-                    def arviprod = usernameCredential.azureuser
+                    def arviprod = usernameCredential.username
 
                     // Retrieve PEM_FILE credential
                     def pemFileCredential = credentials('pemid')
-                    def pemid = pemFileCredential.pemid
+                    def pemid = pemFileCredential.id
 
                     // Retrieve PASSWORD credential
                     def passwordCredential = credentials('passwrd')
-                    def passwrd = passwordCredential.passwrd
+                    def password = passwordCredential.password
 
                     // Deploy changes to the server
                     sh '''
-                    sshpass -p "$passwrd" ssh -i "$pemid" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
+                    sshpass -p "$password" ssh -i "$pemid" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
                     '''
                 }
             }

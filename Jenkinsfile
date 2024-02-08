@@ -14,25 +14,19 @@ pipeline {
                 branch 'dev' // Only run this stage for the dev branch
             }
             steps {
-                // Use Jenkins credentials to retrieve values securely
-                withCredentials([
-                    usernamePassword(credentialsId: 'creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
-                    usernameserver(credentialsId: 'server', server: 'server'),
+                // Retrieve the server credential
+                withCredentials([string(credentialsId: 'server', variable: 'SERVER')]) {
+                    // Use Jenkins credentials to retrieve values securely
+                    withCredentials([
+                        usernamePassword(credentialsId: 'creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
+                        file(credentialsId: 'pemid', variable: 'PEM_FILE')
+                    ]) {
 
-                    file(credentialsId: 'pemid', variable: 'PEM_FILE')
-                ]) {
-
-                    // Print credential values (optional)
-                    echo "Username: $USERNAME"
-                    // Construct the remote command
-                    // def remoteCommand = """
-                    //     cd /home/azureuser/arbifrontend &&
-                    //     git pull origin dev &&
-                    //     docker-compose up -d
-                    // """
-
-                    // Deploy changes to the server
-                    sh "ssh -i $PEM_FILE $USERNAME@$server 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'"
+                        // Print credential values (optional)
+                        echo "Username: $USERNAME"
+                        // Deploy changes to the server
+                        sh "ssh -i $PEM_FILE $USERNAME@$SERVER 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'"
+                    }
                 }
             }
         }

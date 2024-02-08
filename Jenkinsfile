@@ -15,38 +15,16 @@ pipeline {
             }
             steps {
                 // Use Jenkins credentials to retrieve values securely
-                script {
-                    // Retrieve SERVER credential
-                    def serverCredential = credentials(
-                        server: 'server',
-                        providerId: 'arbi_prod'
-                    )
-                    def server = serverCredential.server
-                    echo "Server: $server"
-
-                    // Retrieve USERNAME and PASSWORD credentials
-                    def usernamePasswordCredential = credentials(
-                        id: 'creds',
-                        providerId: 'arbi_prod'
-                    )
-                    def arviprod = usernamePasswordCredential.Username
-                    def password = usernamePasswordCredential.Password
-
-                    // Retrieve PEM_FILE credential
-                    def pemFileCredential = credentials(
-                        id: 'pemid',
-                        providerId: 'arbi_prod'
-                    )
-                    def pemid = pemFileCredential.id
-
+                withCredentials([
+                    usernamePassword(credentialsId: 'creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
+                    file(credentialsId: 'pemid', variable: 'PEM_FILE')
+                ]) {
                     // Print credential values (optional)
-                    echo "Server: $server"
-                    echo "Username: $arviprod"
-                    echo "PEM File ID: $pemid"
+                    echo "Username: $USERNAME"
                     
                     // Deploy changes to the server
                     sh '''
-                    sshpass -p "$password" ssh -i "$pemid" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
+                    sshpass -p "$PASSWORD" ssh -i "$PEM_FILE" "$arviprod"@"$server" 'cd /home/azureuser/arbifrontend && git pull origin dev && docker-compose up -d'
                     '''
                 }
             }

@@ -17,13 +17,10 @@ pipeline {
                 // Use Jenkins credentials to retrieve values securely
                 withCredentials([
                     usernamePassword(credentialsId: 'creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD'),
+                    usernameserver(credentialsId: 'server', server: 'server'),
+
                     file(credentialsId: 'pemid', variable: 'PEM_FILE')
                 ]) {
-                    def serverCredential = credentials(
-                                        id: 'server',
-                                        providerId: 'arbi_prod'
-                                    )
-                    def server = serverCredential.id
 
                     // Print credential values (optional)
                     echo "Username: $USERNAME"
